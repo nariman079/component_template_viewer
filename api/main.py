@@ -57,7 +57,7 @@ async def get_page_vpn(
     query = await db.execute(select(VPNData).where(VPNData.vpn_title == request.subdomain))
     vpn_data = query.scalar_one_or_none()
     if not vpn_data:
-        return HTMLResponse("<h1>404</h1>")
+        return HTMLResponse(status_code=404, content="<h1>404</h1>")
 
     return templates.TemplateResponse(
         request=request, name="landing_1.html", context={"subdomain": request.subdomain}
