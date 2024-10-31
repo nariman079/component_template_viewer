@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_test
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+
+    network_mode: host

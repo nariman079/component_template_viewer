@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "lite-component-template-viewer"
+version = "0.1.0"
+description = ""
+authors = ["nariman079 <nariman079i@mail.ru>"]
+readme = "README.md"
+packages = [{include = "lite"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.3"
+uvicorn = "^0.32.0"
+prometheus-client = "^0.21.0"
+sqlalchemy = "^2.0.36"
+postgres = "^4.0"
+asyncpg = "^0.30.0"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
