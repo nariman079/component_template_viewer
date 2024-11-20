@@ -3,7 +3,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 from api.database import Base
 
 
-
 class VPNData(Base):
     __tablename__ = 'vpn_data'
 
@@ -143,6 +142,3 @@ class VPNData(Base):
         nullable=False,
         default="© 2024 FlyVpn. Все права защищены"
     )
-
-
-

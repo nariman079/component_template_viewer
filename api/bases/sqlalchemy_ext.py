@@ -44,12 +44,14 @@ class DBController:
     ) -> Sequence[Any]:
         return await self.get_all(stmt.offset(offset).limit(limit))
 
+
 db: DBController = DBController()
+
 
 class MappingBase:
     @classmethod
     async def create(cls, **kwargs) -> Self:
-        entry = cls(**kwargs) # type: ignore
+        entry = cls(**kwargs)  # type: ignore
         db.session.add(entry)
         await db.session.flush()
         return entry
@@ -67,7 +69,7 @@ class MappingBase:
         return await db.session.get(cls, *keys)
 
     @classmethod
-    async def find_first_by_kwargs(cls, *order_by: Any,  **kwargs: Any) -> Self | None:
+    async def find_first_by_kwargs(cls, *order_by: Any, **kwargs: Any) -> Self | None:
         return await db.get_first(cls.select_by_kwargs(*order_by, **kwargs))
 
     @classmethod
@@ -83,7 +85,7 @@ class MappingBase:
         )
 
     @classmethod
-    async def count_by_kwargs(cls,*expressions: Any, **kwargs: Any) -> int:
+    async def count_by_kwargs(cls, *expressions: Any, **kwargs: Any) -> int:
         return await db.get_count(
             select(func.count(*expressions, **kwargs)).filter_by(**kwargs)
         )

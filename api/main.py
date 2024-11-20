@@ -12,7 +12,7 @@ from fastapi import (FastAPI,
                      Request,
                      Response)
 
-from starlette.responses import HTMLResponse, JSONResponse
+from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 from starlette.status import HTTP_404_NOT_FOUND
 
@@ -27,7 +27,6 @@ from api.utils import get_subdomain, save_file, is_exists_template
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger(__name__)
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 logging.getLogger('sqlalchemy.orm').setLevel(logging.INFO)
 
 app = FastAPI()
@@ -47,14 +46,14 @@ async def database_session_middleware(
         return await call_next(request)
 
 @app.get('/')
-async def get_page_vpn(
-        request: Request
-):
+async def get_page_vpn(request: Request):
+    """Получение страницы бота"""
     full_url = request.headers.get('host')
     subdomain = await get_subdomain(full_url)
     vpn_data =  await VPNData.find_first_by_kwargs(domain=subdomain)
 
     if not vpn_data:
+        logging.warning(f"Такого бота нет в БД: {subdomain}")
         return HTMLResponse(status_code=404, content="<h1>404</h1>")
 
     return templates.TemplateResponse(
@@ -74,11 +73,15 @@ async def create_vpn_data(
     **domain** - Поддоменное имя для вашего VPN, например flyvpn \n
     **bot_name** - имя бота с которого идет создание сайта ленгинга, например flyvpn_bot \n
     """
+    logging.info("Создание объекта VPNData")
     if await VPNData.find_first_by_kwargs(domain=vpn_data.domain):
+        logging.warning(f"Домен {vpn_data.domain} найден, но он уже занят")
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Такой домен для VPN уже занят")
     if await VPNData.find_first_by_kwargs(bot_name=vpn_data.bot_name):
+        logging.warning(f"Бот {vpn_data.bot_name} найден, но он уже занят")
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Такое имя бота уже занята")
     if not is_exists_template(vpn_data.template_id):
+        logging.warning(f"Такого лендинга не существует {vpn_data.template_id}")
         raise HTTPException(status_code=400, detail="Такого лендинга нет")
 
     new_vpn_data = await VPNData.create(**vpn_data.dict())
@@ -123,7 +126,7 @@ async def update_vpn_data(
         license_description: str | None = Form(default=None),
     ):
     """Изменение данных модели VPNData"""
-
+    logging.info(f"Изменение данных объекта {vpn_data.domain}")
     local_data = {
         k: v for k, v in locals().items() if k not in {"token", "vpn_data"}
     }
@@ -144,6 +147,7 @@ async def update_vpn_data(
             updated_data[key] = value
 
     vpn_data.update(**updated_data)
+    logging.info(f"Данные для {vpn_data.domain} успешно изменены: {updated_data}")
     return updated_data
 
 
@@ -154,5 +158,6 @@ async def delete_vpn_data(
 ):
     """Удаление модели VPNData"""
     await vpn_data.delete()
+    logging.info(f"Объект {vpn_data.domain} был удален с сервера")
     return {"message": "VPN Успешно удален"}
 
