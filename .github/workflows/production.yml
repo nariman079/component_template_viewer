@@ -1,0 +1,21 @@
+#name: Simple CI/CD for Production
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#
+#jobs:
+#  build-and-deploy:
+#    runs-on:
+#      ubuntu-latest
+#    steps:
+#    - name: Checkout Code
+#      uses: actions/checkout@v3
+#
+#    - name: Set up Docker
+#      uses: docker/setup-buildx-action@v2
+#
+#    - name: Import keys and create .env file
+#      run: |
+#        echo "KET=VALUE" >> .env

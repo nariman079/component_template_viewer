@@ -18,8 +18,8 @@ jobs:
 
     - name: Create .env for Develop Environment
       run: |
-        echo "PRODUCTION_MODE=False" >> .env
-        echo "DB_LINK=postgresql+asyncpg://test:test@db:5432/test" >> .env
+        echo "PRODUCTION_MODE=0" >> .env
+        echo "DB_LINK=${{ secrets.DB_LINK }}" >> .env
 
     - name: Build Docker Image
       run: docker compose -f database.yaml -f docker-compose.local.yaml up --build -d
