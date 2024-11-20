@@ -23,3 +23,6 @@ jobs:
 
     - name: Build Docker Image
       run: docker compose -f database.yaml -f docker-compose.local.yaml up --build -d
+
+    - name: Testing Project
+      run: docker compose -f docker-compose.local.yaml exec api pytest
