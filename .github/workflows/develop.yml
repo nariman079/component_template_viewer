@@ -16,6 +16,11 @@ jobs:
     - name: Set up Docker
       uses: docker/setup-buildx-action@v2
 
+    - name: Create .env for Develop Environment
+      run: |
+        echo "PRODUCTION_MODE=False" >> .env
+        echo "DB_LINK=postgresql+asyncpg://test:test@db:5432/test" >> .env
+
     - name: Build Docker Image
       run: ./actions.sh local build
 
