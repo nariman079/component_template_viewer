@@ -1,27 +1,20 @@
-from typing import AsyncGenerator
+from sqlalchemy import MetaData
+from sqlalchemy.ext.asyncio import AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase
 
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker, declarative_base
+from api.bases.sqlalchemy_ext import MappingBase
 
-from api.settings import DB_USER, DB_PASSWORD, DB_PORT, DB_HOST, DB_NAME
+convention = {
+    "ix": "ix_%(column_0_label)s",  # noqa: WPS323
+    "uq": "uq_%(table_name)s_%(column_0_name)s",  # noqa: WPS323
+    "ck": "ck_%(table_name)s_%(constraint_name)s",  # noqa: WPS323
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",  # noqa: WPS323
+    "pk": "pk_%(table_name)s",  # noqa: WPS323
+}
+db_meta = MetaData(naming_convention=convention)
 
-DATABASE_URL = f'postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+class Base(AsyncAttrs, DeclarativeBase, MappingBase):
+    __tablename__: str
+    __abstract__: bool
 
-Base = declarative_base()
-
-engine = create_async_engine(
-    DATABASE_URL,
-    future=True,
-    echo=True
-)
-async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
-
-
-
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
-    """ Dependency for getting async session """
-    try:
-        session: AsyncSession = async_session()
-        yield session
-    finally:
-        await session.close()
+    metadata = db_meta

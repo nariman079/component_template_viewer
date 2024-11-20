@@ -1,10 +1,31 @@
-import os
-from dotenv import load_dotenv
+import asyncio
+import sys
+from os import getenv
+from pathlib import Path
 
-load_dotenv()
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine, AsyncEngine
 
-DB_HOST = os.getenv('DB_HOST')
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_PORT = os.getenv('DB_PORT', 1243)
+current_directory: Path = Path.cwd()
+
+if sys.platform == "win32":  # pragma: no cover
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+
+PRODUCTION_MODE: bool = getenv("PRODUCTION_MODE", False)
+
+if PRODUCTION_MODE:
+    DB_URL = getenv("DB_LINK")
+else:
+    DB_URL = "postgresql+asyncpg://test:test@localhost:5431/test"
+
+engine = create_async_engine(
+    DB_URL,
+    pool_recycle=280,  # noqa: WPS432
+    echo=not PRODUCTION_MODE,
+)
+
+async_session = async_sessionmaker(bind=engine, expire_on_commit=False)
+
+
+# Импорт событий
+import api.events.vpn_data_events

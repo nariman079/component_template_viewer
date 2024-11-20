@@ -1,9 +1,0 @@
-services:
-  api:
-    build: .
-  template_viewer:
-    build: .
-  migrations:
-    build: .
-  nginx:
-    image: nginx

@@ -1,12 +1,21 @@
 @import url('https://fonts.cdnfonts.com/css/body-grotesque-trial');
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-/* 
-font-family: 'Body Grotesque Trial', sans-serif;
-font-family: 'Body Grotesque Fit Trial', sans-serif;
-font-family: 'Body Grotesque Large Trial', sans-serif;
-font-family: 'Body Grotesque Slim', sans-serif; 
-*/
+
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
 
 @font-face {
     font-family: "Body Grotesque Regular Trial";
@@ -26,6 +35,9 @@ body{
     height: fit-content;
     
     overflow-x: hidden; 
+
+    background-color: #fff;
+    color: #000;
 }
 
 .navbar{
@@ -67,7 +79,15 @@ body{
     line-height: 24px;
 
     cursor: pointer;
-    color: #fff;
+    color: #000000;
+}
+
+#download-btn_inside{
+    display: none;
+}
+
+.line_3{
+    display: none;
 }
 
 .download_btn{
@@ -85,6 +105,9 @@ body{
 
     position: absolute;
     right: 0;
+
+    background-color: #000;
+    color: #fff;
 }
 
 .header_content{
@@ -96,7 +119,8 @@ body{
     justify-content: space-between;
 
     margin: 0 auto;
-    margin-top: 150px;
+    margin-top: 50px;
+    padding-top: 100px;
 }
 
 .left-hd_container{
@@ -146,7 +170,10 @@ body{
     font-weight: 700;
     line-height: 24px;
 
-    box-shadow: 0px 5px 15px 0px #FFFFFF33;
+    box-shadow: 0px 5px 15px 0px #00000033;
+
+    background-color: #000;
+    color: #fff;
 
     position: absolute;
     left: 0;
@@ -179,10 +206,10 @@ body{
     font-weight: 700;
     line-height: 24px;
 
-    color: #fff;
-    background-color: #000;
+    color: #000000;
+    background-color: transparent;
 
-    border: 1px solid var(--button-outline_default, #FFFFFF);
+    border: 1px solid var(--button-outline_default, #000000);
 
     position: absolute;
     right: 0;
@@ -191,28 +218,34 @@ body{
 }
 
 .btn_try:hover{
-    box-shadow: 0px 5px 15px 0px #FFFFFF33;
-}
-
-.btn_try:active{
-    box-shadow: none;
-
     background-color: #252525;
+    color: #fff;
 }
-
 
 .speedometer {
     position: relative;
     width: 421px;
     height: 421px;
-    background-image: url("../images/speedometer.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+
+    object-fit: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.speedometer > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    z-index: 2;
 }
 
 .needle {
     position: absolute;
-    top: calc(50% - 93px);
+    top: calc(50% - 60px);
     left: 195px;
 
     width: 31px;
@@ -222,18 +255,11 @@ body{
     transform: rotate(-132deg);  
     clip-path: polygon(26% 0, 69% 0, 93% 100%, 7% 100%);    
 
-    background: linear-gradient(180deg, #FFFFFF 0%, rgba(62, 172, 232, 0) 100%);
+    background: linear-gradient(180deg, #000000 0%, rgba(62, 172, 232, 0) 100%);
 
     animation: rotateNeedle 5s ease-in-out forwards;
-}
 
-@keyframes rotateNeedle {
-    0% {
-        transform: rotate(-137deg);
-    }
-    100% {
-        transform:  rotate(137deg);     
-    }
+    z-index: 1;
 }
 
 .speed {
@@ -243,7 +269,9 @@ body{
 
     transform: translateX(-50%);
 
-    color: white;
+    color: rgb(0, 0, 0);
+
+    z-index: 1;
 }
 
 .speed > h2{
@@ -263,11 +291,15 @@ body{
 }
 
 .advantages{
+    position: relative;
+
     max-width: 1170px;
     height: fit-content;
     
     margin: 0 auto;
-    margin-top: 180px;
+    margin-top: 80px;
+
+    padding-top: 100px;
 }
 
 .advantages > h2{
@@ -302,9 +334,12 @@ body{
     padding-left: 60px;
     box-sizing: border-box;
 
+
+    overflow:hidden;
+
     border-radius: 16px;
 
-    background: var(--card-card_background_primary_default, #121212);
+    background-color: #E9E9E9;
 }
 
 .advantages_container > li > img{
@@ -337,6 +372,12 @@ body{
     display: flex;
     align-items: start;
     justify-content: space-between;
+}
+
+.global_coverage > img{
+    max-width: 350px;
+    max-height: 350px;
+    object-fit: cover;
 }
 
 .global_coverage-text{
@@ -395,6 +436,12 @@ body{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.protect > img{
+    max-width: 670px;
+    max-height: 620px;
+    object-fit: cover;
 }
 
 .protect-text{
@@ -519,6 +566,9 @@ body{
     line-height: 24px;
 
     transition: all 1s ease-in-out;
+
+    background-color: #000;
+    color: #fff;
 }
 
 .line_1, .line_2{
@@ -531,11 +581,11 @@ body{
 }
 
 .line_1{
-    background-color: #fff;
+    background-color: #000000;
 }
 
 .line_2{
-    background: #212121;
+    background: #DADADA;
 }
 
 .try_free{
@@ -554,7 +604,7 @@ body{
     width: 100%;
     height: 100%;
 
-    background-image: url("../images/background_elements.png");
+    background-image: url("../images/white-background_elements.png");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -602,15 +652,21 @@ body{
     font-weight: 700;
     line-height: 24px;
 
-    border: 1px solid white;
+    background-color: #000;
+    color: #fff;
+
+    box-shadow: 0px 5px 15px 0px #00000033;
 
     transition: all .3s ease-in-out;
+    border: 1px solid #000;
+
 }
 
 .add_bg > button:hover{
-    background-color: #000;
-    color: #fff;
-    border: 1px solid white;
+    box-shadow: none;
+    background-color: transparent;
+    color: #000;
+    border: 1px solid #000;
 }
 
 .guide{
@@ -618,11 +674,12 @@ body{
     height: fit-content;
     
     margin: 0 auto;
-    margin-top: 200px;
+    margin-top: 100px;
 
     display: flex;
     flex-direction: column;
-    align-items: left;
+
+    padding-top: 100px;
 }
 
 .guide > h2{
@@ -666,6 +723,8 @@ body{
     gap: 15px;
 
     position: relative;
+
+    cursor: pointer;
 }
 
 .dropdown_pictures > li > button{
@@ -675,13 +734,14 @@ body{
     right: 15px;
 }
 
-.dropdown_pictures > img {
+.dropdown_pictures > iframe {
+    width: 100%;
     max-height: 0;
     opacity: 0;
     transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 
-.dropdown_pictures > img.show {
+.dropdown_pictures > iframe.show {
     max-height: 200px; 
     opacity: 1;
 }
@@ -703,7 +763,7 @@ body{
     width: 8px;
     height: 8px;
 
-    background-color: #212121;
+    background-color: #DADADA;
 }
 
 .footer-content{
@@ -713,7 +773,7 @@ body{
     margin: 0 auto;
     margin-top: 80px;
 
-    border-top: 1px solid #212121;
+    border-top: 1px solid #DADADA;
 
     padding: 20px 45px;
     box-sizing: border-box;
@@ -754,7 +814,7 @@ body{
     line-height: 24px;
 
     cursor: pointer;
-    color: #fff;
+    color: #000000;
 }
 
 .footer-info > button{
@@ -767,6 +827,9 @@ body{
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
+
+    background-color: #000;
+    color: #fff;
 }
 
 .footer-content > h2{

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ee2bae46c5dd
+Revision ID: d633f780909f
 Revises: 
-Create Date: 2024-10-30 18:24:07.465246
+Create Date: 2024-11-05 17:24:03.285663
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'ee2bae46c5dd'
+revision: str = 'd633f780909f'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -23,7 +23,11 @@ def upgrade() -> None:
     op.create_table('vpn_data',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('template_id', sa.Integer(), nullable=False),
-    sa.Column('vpn_title', sa.String(), nullable=False),
+    sa.Column('domain', sa.String(), nullable=False),
+    sa.Column('test_field', sa.String(), nullable=False),
+    sa.Column('test_field_now', sa.String(), nullable=False),
+    sa.Column('bot_name', sa.String(), nullable=False),
+    sa.Column('title', sa.String(), nullable=False),
     sa.Column('header_title', sa.String(), nullable=False),
     sa.Column('header_description', sa.Text(), nullable=False),
     sa.Column('header_image_url', sa.VARCHAR(length=2048), nullable=True),
@@ -47,14 +51,17 @@ def upgrade() -> None:
     sa.Column('setup_security_title', sa.String(), nullable=False),
     sa.Column('setup_security_description', sa.Text(), nullable=False),
     sa.Column('setup_security_image_url', sa.VARCHAR(length=2048), nullable=True),
-    sa.Column('start_bot_image_url', sa.VARCHAR(length=2048), nullable=False),
+    sa.Column('start_bot_image_url', sa.VARCHAR(length=2048), nullable=True),
     sa.Column('start_bot_button_url', sa.VARCHAR(length=2048), nullable=False),
     sa.Column('challenge_title', sa.String(), nullable=False),
     sa.Column('challenge_short_description', sa.Text(), nullable=False),
-    sa.Column('challenge_background_image', sa.VARCHAR(length=2048), nullable=False),
+    sa.Column('challenge_background_image', sa.VARCHAR(length=2048), nullable=True),
     sa.Column('license_description', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('vpn_title')
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_vpn_data')),
+    sa.UniqueConstraint('bot_name', name=op.f('uq_vpn_data_bot_name')),
+    sa.UniqueConstraint('domain', name=op.f('uq_vpn_data_domain')),
+    sa.UniqueConstraint('test_field', name=op.f('uq_vpn_data_test_field')),
+    sa.UniqueConstraint('test_field_now', name=op.f('uq_vpn_data_test_field_now'))
     )
     # ### end Alembic commands ###
 

@@ -8,9 +8,10 @@ class VPNData(Base):
     __tablename__ = 'vpn_data'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    template_id: Mapped[int] = mapped_column(Integer)
-
-    vpn_title: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    template_id: Mapped[int] = mapped_column(nullable=False, default=1)
+    domain: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    bot_name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    title: Mapped[str] = mapped_column(String, nullable=False)
     header_title: Mapped[str] = mapped_column(
         String,
         nullable=False,
@@ -22,7 +23,6 @@ class VPNData(Base):
         default="Оцените нашу мощь с бесплатной пробной подпиской!"
     )
     header_image_url: Mapped[str | None] = mapped_column(VARCHAR(2048), nullable=True)
-
     opportunity_block_title: Mapped[str] = mapped_column(
         String,
         nullable=False,
@@ -61,22 +61,22 @@ class VPNData(Base):
     opportunity_4_title: Mapped[str] = mapped_column(
         String,
         nullable=False,
-        default="Без ограничений"
+        default="До 3-x устройств"
     )
     opportunity_4_short_description: Mapped[str] = mapped_column(
         String,
         nullable=False,
-        default="Полная свобода без лимитов."
+        default="Подключи все свои устройства."
     )
     opportunity_5_title: Mapped[str] = mapped_column(
         String,
         nullable=False,
-        default="Прозрачный код"
+        default="Никакой рекламы"
     )
     opportunity_5_short_description: Mapped[str] = mapped_column(
         String,
         nullable=False,
-        default="Используем октрытый исходный код без скрытых функций."
+        default="Наш VPN блокирует до 95% реклам на YouTube и по всему интернету."
     )
     opportunity_6_title: Mapped[str] = mapped_column(
         String,
@@ -121,10 +121,11 @@ class VPNData(Base):
     )
     setup_security_image_url: Mapped[str | None] = mapped_column(VARCHAR(2048), nullable=True)
     start_bot_image_url: Mapped[str | None] = mapped_column(VARCHAR(2048), nullable=True)
+    start_bot_image_url_2: Mapped[str | None] = mapped_column(VARCHAR(2048), nullable=True)
     start_bot_button_url: Mapped[str] = mapped_column(
         VARCHAR(2048),
         nullable=False,
-        default="vpnbot.ru"
+        default="tm.ru"
     )
     challenge_title: Mapped[str] = mapped_column(
         String,
@@ -142,3 +143,6 @@ class VPNData(Base):
         nullable=False,
         default="© 2024 FlyVpn. Все права защищены"
     )
+
+
+
