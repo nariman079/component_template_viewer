@@ -22,7 +22,4 @@ jobs:
         echo "DB_LINK=postgresql+asyncpg://test:test@db:5432/test" >> .env
 
     - name: Build Docker Image
-      run: ./actions.sh local build
-
-
-
+      run: docker compose -f database.yaml -f docker-compose.local.yaml up --build -d
