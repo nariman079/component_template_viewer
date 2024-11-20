@@ -24,7 +24,21 @@ class VPNDataCreate(BaseModel):
         if not validate_string(domain):
             raise HTTPException(
                 status_code=HTTP_400_BAD_REQUEST,
-                detail="Домен может содержать только английские буквы, цифры от 0 до 9 и символ _. Общая длина не должна превышать 32 символа. Например: my_create_bot_12."
+                detail="Домен может содержать только английские буквы, цифры от 0 до 9 и "
+                       "символ _. Общая длина не должна превышать 32 символа."
+                       " Например: my_domain_12."
+            )
+        return value
+
+    @field_validator("bot_name")
+    def validate_bot_name(cls, value):
+        bot_name = value
+        if not validate_string(bot_name):
+            raise HTTPException(
+                status_code=HTTP_400_BAD_REQUEST,
+                detail="Домен может содержать только английские буквы, цифры от 0 до 9 и "
+                       "символ _. Общая длина не должна превышать 32 символа."
+                       " Например: my_create_bot_12."
             )
         return value
 

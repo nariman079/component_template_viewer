@@ -40,3 +40,5 @@ def validate_string(input_string) -> bool:
 def is_exists_template(template_id: int) -> bool:
     """Проверка на существование шаблона"""
     return template_id in [1, ]
+
+
