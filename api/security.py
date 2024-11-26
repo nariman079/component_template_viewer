@@ -1,12 +1,11 @@
 import os
 from typing import Annotated
 
-from fastapi import Header, HTTPException, UploadFile
+from fastapi import Header, HTTPException
 from starlette.requests import Request
 from starlette.status import HTTP_404_NOT_FOUND, HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN
 
 from api.models import VPNData
-
 
 async def token_dependency(
         telegram_api_x_token: Annotated[str, Header(
@@ -33,6 +32,7 @@ async def token_dependency(
 async def get_vpn_data(
     subdomain: str
 ) -> VPNData:
+    """Получение """
     vpn_data_db = await VPNData.find_first_by_kwargs(domain=subdomain)
     if vpn_data_db is None:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="VPN data not found")
