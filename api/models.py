@@ -11,6 +11,7 @@ class VPNData(Base):
     domain: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     bot_name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     title: Mapped[str] = mapped_column(String, nullable=False)
+    seo_description: Mapped[str] = mapped_column(nullable=True)
     header_title: Mapped[str] = mapped_column(
         String,
         nullable=False,
